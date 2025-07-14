@@ -30,7 +30,7 @@ class Auth extends BaseController  // ⬅️ Harus pakai BaseController
                 'role' => $user['role'],
                 'logged_in' => true
             ]);
-            return redirect()->to('/stock');
+            return redirect()->to('/NoteController');
         } else {
             return redirect()->to('/auth')->with('error', 'Username atau password salah!');
         }
