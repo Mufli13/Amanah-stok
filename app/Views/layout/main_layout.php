@@ -109,7 +109,7 @@
         <button class="dropdown-btn">Transaksi Data ▾</button>
         <div class="dropdown-container">
             <a href="/barang-masuk">Barang Masuk / Kembali</a>
-            <a href="/barang-keluar">Barang Keluar</a>
+            <a href="/barangkeluar">Barang Keluar</a>
         </div>
 
         <a href="/auth/logout">Logout</a>

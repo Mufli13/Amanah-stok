@@ -21,10 +21,13 @@ $routes->post('/notes/add', 'NoteController::add');
 $routes->get('/barang', 'BarangController::index');
 
 $routes->get('/barang-masuk', 'BarangMasukController::index');
-$routes->get('/barang-keluar', 'BarangKeluarController::index');
-$routes->get('/barang-keluar/tambah', 'BarangKeluarController::tambah');
-$routes->post('/barang-keluar/tambah', 'BarangKeluarController::tambah');
-$routes->get('/barang-keluar/delete/(:num)', 'BarangKeluarController::delete/$1');
 
 
+$routes->get('/barangkeluar', 'BarangKeluarController::index');
+$routes->get('/barangkeluar/tambah', 'BarangKeluarController::tambah');
+$routes->post('/barangkeluar/simpan', 'BarangKeluarController::simpan');
 
+$routes->get('/barangkeluar/edit/(:num)', 'BarangKeluarController::edit/$1');
+$routes->post('/barangkeluar/update/(:num)', 'BarangKeluarController::update/$1');
+
+$routes->get('/barangkeluar/hapus/(:num)', 'BarangKeluarController::hapus/$1');

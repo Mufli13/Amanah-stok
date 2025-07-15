@@ -2,56 +2,92 @@
 
 namespace App\Controllers;
 
-use App\Models\BarangKeluar ;
+use App\Controllers\BaseController;
+use App\Models\BarangKeluarModel;
 
 class BarangKeluar extends BaseController
 {
-    protected $barangKeluar;
+    protected $barangKeluarModel;
 
     public function __construct()
     {
-        $this->barangKeluar = new BarangKeluarModel();
-        helper(['form', 'url']); // optional: untuk form & url helper
+        $this->barangKeluarModel = new BarangKeluarModel();
     }
 
+    // Halaman utama
     public function index()
     {
         $data = [
-            'barang_keluar' => $this->barangKeluar->findAll()
+            'title' => 'Barang Keluar',
+            'barang_keluar' => $this->barangKeluarModel->findAll()
         ];
 
         return view('barang_keluar_view', $data);
     }
 
+    // Form Tambah
     public function tambah()
     {
-        if ($this->request->getMethod() === 'post') {
-            $data = [
-                'tanggal'    => $this->request->getPost('tanggal'),
-                'barang'     => $this->request->getPost('barang'),
-                'ukuran'     => $this->request->getPost('ukuran'),
-                'jumlah'     => $this->request->getPost('jumlah'),
-                'penerima'   => $this->request->getPost('penerima'),
-                'keterangan' => $this->request->getPost('keterangan'),
-            ];
+        $data = [
+            'title' => 'Tambah Barang Keluar'
+        ];
 
-            $this->barangKeluar->insert($data);
-
-            session()->setFlashdata('success', 'Data barang keluar berhasil ditambahkan.');
-            return redirect()->to('/barang-keluar');
-        }
-
-        return view('barang_keluar_tambah');
+        return view('barang_keluar/tambah', $data);
     }
 
-    public function delete($id)
+    // Simpan data baru
+    public function simpan()
     {
-        if ($this->barangKeluar->delete($id)) {
-            session()->setFlashdata('success', 'Data barang keluar berhasil dihapus.');
-        } else {
-            session()->setFlashdata('error', 'Gagal menghapus data.');
+        if (!$this->validate([
+            'tanggal' => 'required',
+            'barang' => 'required',
+            'jumlah' => 'required|integer'
+        ])) {
+            return redirect()->back()->withInput();
         }
 
-        return redirect()->to('/barang-keluar');
+        $this->barangKeluarModel->save([
+            'tanggal' => $this->request->getPost('tanggal'),
+            'barang' => $this->request->getPost('barang'),
+            'ukuran' => $this->request->getPost('ukuran'),
+            'jumlah' => $this->request->getPost('jumlah'),
+            'penerima' => $this->request->getPost('penerima'),
+            'keterangan' => $this->request->getPost('keterangan'),
+        ]);
+
+        return redirect()->to('/barangkeluar')->with('success', 'Data berhasil ditambahkan!');
+    }
+
+    // Form Edit
+    public function edit($id_keluar)
+    {
+        $data = [
+            'title' => 'Edit Barang Keluar',
+            'barang' => $this->barangKeluarModel->find($id_keluar)
+        ];
+
+        return view('barang_keluar/edit', $data);
+    }
+
+    // Proses update data
+    public function update($id_keluar)
+    {
+        $this->barangKeluarModel->update($id_keluar, [
+            'tanggal' => $this->request->getPost('tanggal'),
+            'barang' => $this->request->getPost('barang'),
+            'ukuran' => $this->request->getPost('ukuran'),
+            'jumlah' => $this->request->getPost('jumlah'),
+            'penerima' => $this->request->getPost('penerima'),
+            'keterangan' => $this->request->getPost('keterangan'),
+        ]);
+
+        return redirect()->to('/barangkeluar')->with('success', 'Data berhasil diupdate!');
+    }
+
+    // Hapus data
+    public function hapus($id_keluar)
+    {
+        $this->barangKeluarModel->delete($id_keluar);
+        return redirect()->to('/barangkeluar')->with('success', 'Data berhasil dihapus!');
     }
 }

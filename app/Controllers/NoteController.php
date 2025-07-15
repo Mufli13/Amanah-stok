@@ -22,7 +22,7 @@ class NoteController extends BaseController
         $catatan = $this->request->getPost('isi_catatan');
 
         $model->save([
-            'isi_catatan'   => $catatan,
+            'isi'   => $catatan,
             'ditulis_oleh'  => 'Saya, Stock 📝',
             'created_at'    => date('Y-m-d H:i:s')
         ]);
