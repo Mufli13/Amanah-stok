@@ -5,7 +5,7 @@ namespace App\Controllers;
 use App\Controllers\BaseController;
 use App\Models\BarangKeluarModel;
 
-class BarangKeluar extends BaseController
+class BarangKeluarController extends BaseController
 {
     protected $barangKeluarModel;
 
