@@ -22,3 +22,9 @@ $routes->get('/barang', 'BarangController::index');
 
 $routes->get('/barang-masuk', 'BarangMasukController::index');
 $routes->get('/barang-keluar', 'BarangKeluarController::index');
+$routes->get('/barang-keluar/tambah', 'BarangKeluarController::tambah');
+$routes->post('/barang-keluar/tambah', 'BarangKeluarController::tambah');
+$routes->get('/barang-keluar/delete/(:num)', 'BarangKeluarController::delete/$1');
+
+
+
