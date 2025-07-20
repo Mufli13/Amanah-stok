@@ -3,15 +3,15 @@
 namespace App\Controllers;
 
 use App\Controllers\BaseController;
-use App\Models\BarangMasukModel;
+use App\Models\DaftarBarangModel;
 
-class BarangMasukController extends BaseController
+class DaftarBarangController extends BaseController
 {
-    protected $barangMasukModel;
+    protected $daftarBarangModel;
 
     public function __construct()
     {
-        $this->barangMasukModel = new BarangMasukModel();
+        $this->daftarBarangModel = new DaftarBarangModel();
     }
 
     // Halaman utama
@@ -20,11 +20,11 @@ class BarangMasukController extends BaseController
         $cek = $this->cekLogin();
         if ($cek) return $cek; // redirect kalau belum login
         $data = [
-            'title' => 'Barang Masuk',
-            'barang_masuk' => $this->barangMasukModel->findAll()
+            'title' => 'Daftar Barang',
+            'daftar_barang' => $this->daftarBarangModel->findAll()
         ];
 
-        return view('barang_masuk_view', $data);
+        return view('barang_view', $data);
     }
 
     // Form Tambah
@@ -33,10 +33,10 @@ class BarangMasukController extends BaseController
         $cek = $this->cekLogin();
         if ($cek) return $cek; // redirect kalau belum login
         $data = [
-            'title' => 'Tambah Barang Masuk'
+            'title' => 'Tambah Daftar Barang'
         ];
 
-        return view('form_barang_masuk', $data);
+        return view('form_daftar_barang', $data);
     }
 
     // Simpan data baru
@@ -46,22 +46,24 @@ class BarangMasukController extends BaseController
         if ($cek) return $cek; // redirect kalau belum login
         if (!$this->validate([
             'tanggal' => 'required',
-            'barang' => 'required',
-            'jumlah' => 'required|integer'
+            'nama_barang' => 'required',
+            'merk' => 'required'
         ])) {
             return redirect()->back()->withInput();
         }
 
-        $this->barangMasukModel->save([
+        $this->daftarBarangModel->save([
             'tanggal' => $this->request->getPost('tanggal'),
-            'barang' => $this->request->getPost('barang'),
+            'nama_barang' => $this->request->getPost('nama_barang'),
+            'jenis' => $this->request->getPost('jenis'),
+            'merk' => $this->request->getPost('merk'),
             'ukuran' => $this->request->getPost('ukuran'),
-            'jumlah' => $this->request->getPost('jumlah'),
-            'penerima' => $this->request->getPost('penerima'),
-            'keterangan' => $this->request->getPost('keterangan'),
+            'stock' => $this->request->getPost('stock'),
+            'satuan' => $this->request->getPost('satuan'),
+            'lokasi' => $this->request->getPost('lokasi'),
         ]);
 
-        return redirect()->to('/barang-masuk')->with('success', 'Data berhasil ditambahkan!');
+        return redirect()->to('/daftarbarang')->with('success', 'Data berhasil ditambahkan!');
     }
 
     // Hapus data
@@ -69,7 +71,7 @@ class BarangMasukController extends BaseController
     { // 🔒 Cek apakah sudah login
         $cek = $this->cekLogin();
         if ($cek) return $cek; // redirect kalau belum login
-        $this->barangMasukModel->delete($id);
-        return redirect()->to('/barangmasuk')->with('success', 'Data berhasil dihapus!');
+        $this->daftarBarangModel->delete($id);
+        return redirect()->to('/daftar-barang')->with('success', 'Data berhasil dihapus!');
     }
 }

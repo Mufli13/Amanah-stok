@@ -8,6 +8,9 @@ class NoteController extends BaseController
 {
     public function index()
     {
+        // 🔒 Cek apakah sudah login
+        $cek = $this->cekLogin();
+        if ($cek) return $cek; // redirect kalau belum login
         $model = new NoteModel();
         $data = [
             'title' => 'Notes',
@@ -17,7 +20,9 @@ class NoteController extends BaseController
     }
 
     public function add()
-    {
+    {  // 🔒 Cek apakah sudah login
+        $cek = $this->cekLogin();
+        if ($cek) return $cek; // redirect kalau belum login
         $model = new NoteModel();
         $catatan = $this->request->getPost('isi_catatan');
 

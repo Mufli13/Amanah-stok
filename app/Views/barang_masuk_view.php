@@ -4,7 +4,7 @@
 <div class="mt-4">
     <nav aria-label="breadcrumb">
         <ol class="breadcrumb">
-            <li class="breadcrumb-item"><a href="#">Dashboard</a></li>
+            <li class="breadcrumb-item"><a href="<?= site_url('dashboard') ?>">Dashboard</a></li>
             <li class="breadcrumb-item active">Home / Barang Masuk</li>
         </ol>
     </nav>
@@ -12,8 +12,8 @@
     <div class="card">
         <div class="card-body">
             <div class="d-flex justify-content-between align-items-center mb-3">
-                <h5 class="card-title">Barang Masuk / Kembali</h5>
-                <a href="#" class="btn btn-primary">Tambah</a>
+                <h5 class="card-title">Barang Masuk</h5>
+                <a href="<?= site_url('barangmasuk/tambah') ?>" class="btn btn-primary">Tambah</a>
             </div>
 
             <div class="table-responsive">
@@ -22,25 +22,46 @@
                         <tr>
                             <th>No</th>
                             <th>Tanggal</th>
-                            <th>Nama Barang</th>
-                            <th>Jenis</th>
-                            <th>Merk</th>
+                            <th>Barang</th>
                             <th>Ukuran</th>
                             <th>Jumlah</th>
+                            <th>Penerima</th>
                             <th>Keterangan</th>
                             <th>Opsi</th>
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <td colspan="9" class="text-muted">No data available in table</td>
-                        </tr>
+                        <?php if (!empty($barang_masuk)): ?>
+                            <?php $no = 1;
+                            foreach ($barang_masuk as $row): ?>
+                                <tr>
+                                    <td><?= $no++ ?></td>
+                                    <td><?= esc($row['tanggal']) ?></td>
+                                    <td><?= esc($row['barang']) ?></td>
+                                    <td><?= esc($row['ukuran']) ?></td>
+                                    <td><?= esc($row['jumlah']) ?></td>
+                                    <td><?= esc($row['penerima']) ?></td>
+                                    <td><?= esc($row['keterangan']) ?></td>
+                                    <td>
+                                        <a href="<?= site_url('barangmasuk/hapus/' . $row['id']) ?>"
+                                            onclick="return confirm('Yakin ingin menghapus data ini?')"
+                                            class="btn btn-sm btn-danger">
+                                            Hapus
+                                        </a>
+                                    </td>
+                                </tr>
+                            <?php endforeach; ?>
+                        <?php else: ?>
+                            <tr>
+                                <td colspan="8" class="text-muted">No data available in table</td>
+                            </tr>
+                        <?php endif; ?>
                     </tbody>
                 </table>
             </div>
 
             <div class="d-flex justify-content-between mt-3">
-                <button class="btn btn-info">Export Data</button>
+                <a href="<?= site_url('barangkeluar/export') ?>" class="btn btn-info">Export Data</a>
                 <nav>
                     <ul class="pagination pagination-sm mb-0">
                         <li class="page-item disabled"><a class="page-link" href="#">Previous</a></li>

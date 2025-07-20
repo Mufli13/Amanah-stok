@@ -104,7 +104,7 @@
     <div class="sidebar" id="sidebar">
         <h5 class="text-white pt-4 ps-3">Amanah Response's</h5>
         <a href="/notes">Notes</a>
-        <a href="/barang">Stock Barang</a>
+        <a href="/daftarbarang">Stock Barang</a>
 
         <button class="dropdown-btn">Transaksi Data ▾</button>
         <div class="dropdown-container">

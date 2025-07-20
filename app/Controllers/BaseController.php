@@ -55,4 +55,10 @@ abstract class BaseController extends Controller
 
         // E.g.: $this->session = service('session');
     }
+    protected function cekLogin()
+    {
+        if (!session()->get('logged_in')) {
+            return redirect()->to('/auth')->with('error', 'Silakan login dulu.');
+        }
+    }
 }

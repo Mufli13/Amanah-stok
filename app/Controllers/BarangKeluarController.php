@@ -17,6 +17,9 @@ class BarangKeluarController extends BaseController
     // Halaman utama
     public function index()
     {
+        // 🔒 Cek apakah sudah login
+        $cek = $this->cekLogin();
+        if ($cek) return $cek; // redirect kalau belum login
         $data = [
             'title' => 'Barang Keluar',
             'barang_keluar' => $this->barangKeluarModel->findAll()
@@ -27,17 +30,21 @@ class BarangKeluarController extends BaseController
 
     // Form Tambah
     public function tambah()
-    {
+    {  // 🔒 Cek apakah sudah login
+        $cek = $this->cekLogin();
+        if ($cek) return $cek; // redirect kalau belum login
         $data = [
             'title' => 'Tambah Barang Keluar'
         ];
 
-        return view('barang_keluar/tambah', $data);
+        return view('form_barang_keluar', $data);
     }
 
     // Simpan data baru
     public function simpan()
-    {
+    { // 🔒 Cek apakah sudah login
+        $cek = $this->cekLogin();
+        if ($cek) return $cek; // redirect kalau belum login
         if (!$this->validate([
             'tanggal' => 'required',
             'barang' => 'required',
@@ -58,36 +65,12 @@ class BarangKeluarController extends BaseController
         return redirect()->to('/barangkeluar')->with('success', 'Data berhasil ditambahkan!');
     }
 
-    // Form Edit
-    public function edit($id_keluar)
-    {
-        $data = [
-            'title' => 'Edit Barang Keluar',
-            'barang' => $this->barangKeluarModel->find($id_keluar)
-        ];
-
-        return view('barang_keluar/edit', $data);
-    }
-
-    // Proses update data
-    public function update($id_keluar)
-    {
-        $this->barangKeluarModel->update($id_keluar, [
-            'tanggal' => $this->request->getPost('tanggal'),
-            'barang' => $this->request->getPost('barang'),
-            'ukuran' => $this->request->getPost('ukuran'),
-            'jumlah' => $this->request->getPost('jumlah'),
-            'penerima' => $this->request->getPost('penerima'),
-            'keterangan' => $this->request->getPost('keterangan'),
-        ]);
-
-        return redirect()->to('/barangkeluar')->with('success', 'Data berhasil diupdate!');
-    }
-
     // Hapus data
-    public function hapus($id_keluar)
-    {
-        $this->barangKeluarModel->delete($id_keluar);
+    public function hapus($id)
+    { // 🔒 Cek apakah sudah login
+        $cek = $this->cekLogin();
+        if ($cek) return $cek; // redirect kalau belum login
+        $this->barangKeluarModel->delete($id);
         return redirect()->to('/barangkeluar')->with('success', 'Data berhasil dihapus!');
     }
 }

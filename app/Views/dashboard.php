@@ -1,1 +1,0 @@
-<h1>Selamat datang di dashboard Stock!</h1>

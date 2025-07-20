@@ -32,20 +32,21 @@
                     </thead>
                     <tbody>
                         <?php if (!empty($barang_keluar)): ?>
-                            <?php $no = 1; foreach ($barang_keluar as $row): ?>
+                            <?php $no = 1;
+                            foreach ($barang_keluar as $row): ?>
                                 <tr>
                                     <td><?= $no++ ?></td>
-                                    <td><?= esc($row->tanggal) ?></td>
-                                    <td><?= esc($row->barang) ?></td>
-                                    <td><?= esc($row->ukuran) ?></td>
-                                    <td><?= esc($row->jumlah) ?></td>
-                                    <td><?= esc($row->penerima) ?></td>
-                                    <td><?= esc($row->keterangan) ?></td>
+                                    <td><?= esc($row['tanggal']) ?></td>
+                                    <td><?= esc($row['barang']) ?></td>
+                                    <td><?= esc($row['ukuran']) ?></td>
+                                    <td><?= esc($row['jumlah']) ?></td>
+                                    <td><?= esc($row['penerima']) ?></td>
+                                    <td><?= esc($row['keterangan']) ?></td>
                                     <td>
-                                        <a href="<?= site_url('barangkeluar/delete/'.$row->id) ?>"
-                                           onclick="return confirm('Yakin ingin menghapus data ini?')"
-                                           class="btn btn-sm btn-danger">
-                                           Hapus
+                                        <a href="<?= site_url('barangkeluar/hapus/' . $row['id']) ?>"
+                                            onclick="return confirm('Yakin ingin menghapus data ini?')"
+                                            class="btn btn-sm btn-danger">
+                                            Hapus
                                         </a>
                                     </td>
                                 </tr>

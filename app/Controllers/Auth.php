@@ -24,9 +24,8 @@ class Auth extends BaseController  // ⬅️ Harus pakai BaseController
 
         if ($user && md5($password) == $user['password']) {
             $session->set([
-                'id_user' => $user['id_user'],
+                'id' => $user['id'],
                 'username' => $user['username'],
-                'nama_lengkap' => $user['nama_lengkap'],
                 'role' => $user['role'],
                 'logged_in' => true
             ]);
